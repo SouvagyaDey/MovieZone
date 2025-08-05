@@ -17,6 +17,9 @@
         <a class="navbar-brand" href="/">Cinerra</a>
         <div class="d-flex align-items-center">
             {% if user.is_authenticated %}
+                <a href="{% url 'recommendations' %}" class="btn btn-outline-light me-2">
+                    <i class='bx bx-star'></i> Recommendations
+                </a>
                 <a href="{% url 'wishlist' %}" class="btn btn-outline-light me-3">
                     <i class='bx bx-bookmark'></i> Wishlist
                 </a>
@@ -68,7 +71,45 @@
 <main class="container py-5">
     {% block content %}
         <div class="container">
-            <h1 class="text-center my-4">Movies</h1>
+            <!-- Top Recommendations Section (only show when not searching) -->
+            {% if not search_query and top_recommendations %}
+            <div class="mb-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="text-light">
+                        <i class='bx bx-star'></i> Top Recommendations
+                    </h2>
+                    <a href="{% url 'recommendations' %}" class="btn btn-outline-light btn-sm">
+                        View All <i class='bx bx-right-arrow-alt'></i>
+                    </a>
+                </div>
+                <div class="row">
+                    {% for movie in top_recommendations %}
+                        <div class="col-md-3">
+                            <div class="card bg-dark text-white movie-card position-relative">
+                                <div class="badge bg-warning text-dark position-absolute" style="top: 10px; right: 10px; z-index: 2;">
+                                    <i class='bx bx-star'></i> {{ movie.avg_rating|floatformat:1 }}
+                                </div>
+                                <img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.title }}" style="height: 300px; object-fit: cover;">
+                                <div class="card-body card-overlay">
+                                    <h6 class="card-title">{{ movie.title }}</h6>
+                                    <small class="text-muted">{{ movie.review_count }} review{{ movie.review_count|pluralize }}</small>
+                                    {% if user.is_authenticated %}
+                                    <a href="{% url 'movie_detail' movie.id %}" class="btn btn-transparent btn-sm mt-2">View Details</a>
+                                    {% else %}
+                                    <a href="{% url 'signin' %}" class="btn btn-transparent btn-sm mt-2">Login to View</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <hr class="bg-secondary my-4">
+            </div>
+            {% endif %}
+            
+            <h1 class="text-center my-4">
+                {% if search_query %}Search Results{% else %}All Movies{% endif %}
+            </h1>
             {% if movies %}
             <div class="row">
                 {% for movie in movies %}

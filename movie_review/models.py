@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Q
+from django.db.models import Q, Avg
 
 class Movie(models.Model):
     title = models.CharField(max_length=255)
@@ -10,6 +10,15 @@ class Movie(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def get_average_rating(self):
+        """Calculate and return the average rating for this movie"""
+        avg_rating = self.reviews.aggregate(Avg('rating'))['rating__avg']
+        return round(avg_rating, 1) if avg_rating else 0
+    
+    def get_review_count(self):
+        """Return the total number of reviews for this movie"""
+        return self.reviews.count()
     
 class Wishlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wishlist')

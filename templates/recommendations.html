@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .recommendation-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0 40px;
+        margin-top: 76px;
+    }
+    
+    .rating-badge {
+        background: linear-gradient(45deg, #ff6b6b, #feca57);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+    
+    .movie-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 2rem;
+    }
+    
+    .movie-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    
+    .movie-card img {
+        height: 300px;
+        object-fit: cover;
+    }
+    
+    .recommended-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: bold;
+        z-index: 2;
+    }
+    
+    .no-recommendations {
+        text-align: center;
+        padding: 60px 20px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 20px;
+        margin: 40px 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="recommendation-hero">
+    <div class="container text-center">
+        <h1 class="display-4 mb-3">
+            <i class='bx bx-star'></i> Recommended Movies
+        </h1>
+        <p class="lead">Discover highly-rated movies based on community reviews</p>
+    </div>
+</div>
+
+<div class="container py-5">
+    {% if recommended_movies %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="text-light">
+                        <i class='bx bx-trending-up'></i> Top Rated Movies
+                    </h3>
+                    <span class="badge bg-info">{{ recommended_movies|length }} recommendations</span>
+                </div>
+                <hr class="bg-secondary">
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for movie in recommended_movies %}
+                <div class="col-md-4 col-lg-3">
+                    <div class="card bg-dark text-white movie-card position-relative">
+                        <div class="recommended-badge">
+                            <i class='bx bx-crown'></i> Recommended
+                        </div>
+                        {% if movie.image %}
+                            <img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.title }}">
+                        {% else %}
+                            <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 300px;">
+                                <i class='bx bx-movie text-light' style="font-size: 4rem;"></i>
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.title }}</h5>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="rating-badge">
+                                    <i class='bx bx-star'></i> {{ movie.avg_rating|floatformat:1 }}
+                                </div>
+                                <small class="text-muted">
+                                    {{ movie.review_count }} review{{ movie.review_count|pluralize }}
+                                </small>
+                            </div>
+                            <p class="card-text text-muted small">
+                                {{ movie.description|truncatewords:15 }}
+                            </p>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'movie_detail' movie.id %}" class="btn btn-custom btn-sm w-100">
+                                    <i class='bx bx-play'></i> View Details
+                                </a>
+                            {% else %}
+                                <a href="{% url 'signin' %}" class="btn btn-outline-light btn-sm w-100">
+                                    <i class='bx bx-log-in'></i> Login to View
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-5">
+            <p class="text-muted">
+                <i class='bx bx-info-circle'></i> 
+                Recommendations are based on average user ratings from community reviews
+            </p>
+        </div>
+    {% else %}
+        <div class="no-recommendations">
+            <i class='bx bx-movie' style="font-size: 4rem; color: #667eea;"></i>
+            <h3 class="mt-3 text-light">No Recommendations Available</h3>
+            <p class="text-muted">
+                Movies need at least one review to be recommended. 
+                <br>Start by reviewing some movies to help build our recommendation system!
+            </p>
+            <a href="{% url 'home' %}" class="btn btn-custom mt-3">
+                <i class='bx bx-home'></i> Browse Movies
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
