@@ -1,9 +1,9 @@
 from django.urls import path
 from . import views
-from movie_review.views import home
+
 urlpatterns = [
-    path('', home, name='home'),
-    path('signup/', views.signup, name='signup'),
-    path('signin/', views.signin, name='signin'),
-    path('logout/', views.user_logout, name='logout'),
+    path('api/auth/register/', views.register, name='register'),
+    path('api/auth/login/', views.login, name='login'),
+    path('api/auth/logout/', views.logout, name='logout'),
+    path('api/auth/profile/', views.profile, name='profile'),
 ]
