@@ -170,14 +170,22 @@ const MovieDetail = () => {
 
     setSubmitting(true);
     try {
+      console.log('Submitting review:', {
+        ...reviewForm,
+        movie_id: id
+      });
+      
       await movieAPI.createReview({
         ...reviewForm,
-        movie: id
+        movie_id: id
       });
       setReviewForm({ review_text: '', rating: 5 });
       fetchReviews();
+      setError(''); // Clear any previous errors
     } catch (error) {
-      setError('Failed to submit review');
+      console.error('Review submission error:', error);
+      console.error('Error response:', error.response?.data);
+      setError(error.response?.data?.detail || error.response?.data?.error || 'Failed to submit review');
     } finally {
       setSubmitting(false);
     }

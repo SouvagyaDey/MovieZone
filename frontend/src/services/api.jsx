@@ -108,7 +108,7 @@ export const movieAPI = {
 
   // Reviews
   getMovieReviews: async (movieId) => {
-    const response = await api.get(`/api/movies/reviews/?movie=${movieId}`);
+    const response = await api.get(`/api/movies/reviews/?movie_id=${movieId}`);
     return response;
   },
 
