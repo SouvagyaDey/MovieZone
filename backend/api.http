@@ -1,0 +1,53 @@
+### Signup
+POST http://localhost:8000/api/users/register/
+Content-Type: application/json
+
+{
+  "username": "user2",
+  "password": "1234",
+  "password2": "1234"
+}
+
+
+### Signin (JWT)
+POST http://localhost:8000/api/users/login/
+Content-Type: application/json
+
+{
+  "username": "user2",
+  "password": "1234"
+}
+
+### Get Movies (public)
+GET http://localhost:8000/movies/
+
+### Create Movie (requires JWT)
+POST http://localhost:8000/api/movies/movies/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MDc1NDIwLCJpYXQiOjE3NTcwNjgyMjAsImp0aSI6ImUyMTJiYTZlMTE1MDQyNmU5ODcwYjk5NWQyNjdjYzQ3IiwidXNlcl9pZCI6IjIifQ.EkykrLFHMZMm1nufFp_iZGHeh6pgZgigYRaqke3Ae-8
+
+{
+    "title": "The Dark Knight",
+    "description": "Batman faces his greatest psychological and physical tests when the Joker plunges Gotham into chaos.",
+    "release_date": "2008-07-18"
+}
+
+### Get Wishlist (requires JWT)
+POST http://localhost:8000/api/movies/wishlist/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MDgzMjYyLCJpYXQiOjE3NTcwNzYwNjIsImp0aSI6IjJmODIwN2NjM2YyODQ4NmM5ZjMyYWZjN2VlMjIzNjllIiwidXNlcl9pZCI6IjMifQ.NVuY4ZQlSbLuYEJ63EHqBRt4S6D-pAZuHbKh6fm56h0
+
+{
+  "movie_id": 2
+}
+
+###
+POST http://localhost:8000/api/movies/reviews/
+Content-Type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MDgzMjYyLCJpYXQiOjE3NTcwNzYwNjIsImp0aSI6IjJmODIwN2NjM2YyODQ4NmM5ZjMyYWZjN2VlMjIzNjllIiwidXNlcl9pZCI6IjMifQ.NVuY4ZQlSbLuYEJ63EHqBRt4S6D-pAZuHbKh6fm56h0
+
+{
+    "movie_id": 1,
+    "rating": 5,
+    "review_text": "An absolute masterpiece with stunning performances and a gripping storyline."
+}
