@@ -1,70 +1,172 @@
-# Getting Started with Create React App
+# MovieZone Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React frontend for the MovieZone movie review platform with Material-UI components and comprehensive features.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+### 🎬 Movie Discovery
+- **Advanced Filtering**: Trending, Top Rated, Latest, and search functionality
+- **Modern UI**: Dark theme with gradient accents and smooth animations
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Movie Cards**: Rich cards with ratings, wishlist functionality, and previews
 
-### `npm start`
+### ⭐ Reviews & Ratings
+- **10-Point Rating System**: Detailed rating system matching backend
+- **Sentiment Analysis Display**: Visual sentiment indicators using DistilBERT analysis
+- **Rich Reviews**: Full CRUD operations for authenticated users
+- **Comments System**: Interactive commenting on movies
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 👤 User Features
+- **Authentication**: Login/Register with form validation and password strength
+- **User Profiles**: Comprehensive profile pages with activity tracking
+- **Wishlist Management**: Save and organize favorite movies
+- **Rating Analytics**: Personal rating distribution and statistics
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🔧 Admin Features
+- **Movie Management**: Full CRUD operations for movies
+- **Image Upload**: Movie poster upload and management
+- **Admin Dashboard**: Statistics and overview of platform activity
+- **Bulk Operations**: Efficient management tools
 
-### `npm test`
+### 🎨 Modern UI/UX
+- **Material-UI Components**: Consistent design system
+- **Dark Theme**: Eye-friendly dark theme with custom color palette
+- **Smooth Animations**: Micro-interactions and transitions
+- **Loading States**: Comprehensive loading and error handling
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech Stack
 
-### `npm run build`
+- **React 18** - Modern React with hooks
+- **Material-UI v5** - Component library and theming
+- **React Router v6** - Client-side routing
+- **Axios** - HTTP client with interceptors
+- **Date-fns** - Date formatting and manipulation
+- **Context API** - State management for authentication
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+- Running Django backend on port 8000
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Installation
 
-### `npm run eject`
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Start development server**:
+   ```bash
+   npm start
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Build for production**:
+   ```bash
+   npm run build
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The app will be available at `http://localhost:3000` and will proxy API requests to `http://localhost:8000`.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project Structure
 
-## Learn More
+```
+src/
+├── components/          # Reusable UI components
+│   ├── MovieCard.js    # Movie display card
+│   ├── MovieFilters.js # Filtering and search
+│   └── Navbar.js       # Navigation header
+├── contexts/           # React Context providers
+│   └── AuthContext.js  # Authentication state
+├── pages/              # Page components
+│   ├── MovieList.js    # Movie browsing page
+│   ├── MovieDetail.js  # Individual movie page
+│   ├── Login.js        # Authentication
+│   ├── Register.js     # User registration
+│   ├── Wishlist.js     # User wishlist
+│   ├── AdminMovies.js  # Admin dashboard
+│   └── Profile.js      # User profile
+├── services/           # API communication
+│   └── api.js          # Axios configuration and endpoints
+├── App.js              # Main app component
+└── index.js            # App entry point
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Key Features Detail
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Movie Filtering
+- **Trending**: Movies with recent reviews and wishlists (last 30 days)
+- **Top Rated**: Movies with highest average rating (minimum 3 reviews)  
+- **Latest**: Recently added movies
+- **Search**: Full-text search across titles and descriptions
 
-### Code Splitting
+### Authentication
+- **JWT Token Management**: Automatic token handling and refresh
+- **Protected Routes**: Route protection based on authentication status
+- **Role-based Access**: Admin-only features and pages
+- **Form Validation**: Client-side validation with helpful feedback
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Responsive Design
+- **Mobile-first**: Optimized for mobile devices
+- **Flexible Layouts**: Grid system adapts to screen sizes
+- **Touch-friendly**: Large touch targets and gestures
+- **Performance**: Optimized images and lazy loading
 
-### Analyzing the Bundle Size
+### Error Handling
+- **Network Errors**: Graceful handling of API failures
+- **Loading States**: Skeleton screens and spinners
+- **User Feedback**: Toast notifications and error messages
+- **Retry Logic**: Automatic retry for failed requests
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## API Integration
 
-### Making a Progressive Web App
+The frontend integrates with the Django REST API:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- **Movies API**: CRUD operations, filtering, and search
+- **Reviews API**: Review management with sentiment analysis
+- **Comments API**: Movie commenting system
+- **Wishlist API**: Personal movie wishlist
+- **Auth API**: User authentication and profile management
 
-### Advanced Configuration
+## Customization
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Theme Customization
+The app uses Material-UI's theming system. Modify `src/index.js` to customize:
+- Color palette
+- Typography
+- Component styling
+- Breakpoints
 
-### Deployment
+### Adding Features
+1. Create new components in `src/components/`
+2. Add API endpoints to `src/services/api.js`
+3. Create pages in `src/pages/`
+4. Update routing in `src/App.js`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Performance Optimizations
 
-### `npm run build` fails to minify
+- **Code Splitting**: Lazy loading for routes
+- **Image Optimization**: WebP support and fallbacks  
+- **Bundle Optimization**: Tree shaking and minification
+- **Caching**: Intelligent API response caching
+- **Pagination**: Efficient data loading
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## Contributing
+
+1. Follow the existing code style
+2. Add PropTypes for components
+3. Include responsive design
+4. Test on multiple screen sizes
+5. Follow accessibility guidelines
+
+## License
+
+This project is part of the MovieZone application.

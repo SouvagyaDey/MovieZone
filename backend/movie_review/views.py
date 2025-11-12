@@ -4,6 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Avg, Count, Q
 from datetime import datetime, timedelta
+import requests
 
 from .models import Movie, Wishlist, Comment, Review
 from .serializers import MovieSerializer, WishlistSerializer, CommentSerializer, ReviewSerializer
@@ -82,6 +83,65 @@ class MovieViewSet(viewsets.ModelViewSet):
             'top-rated': top_rated_count,
             'latest': latest_count,
             'all': latest_count
+        })
+
+    @action(detail=True, methods=['get'], permission_classes=[AllowAny])
+    def watch_options(self, request, pk=None):
+        """Get streaming/watch options for a movie"""
+        movie = self.get_object()
+        
+        # Mock data for common streaming platforms
+        # In production, you'd integrate with APIs like Watchmode, JustWatch, or Streaming Availability API
+        watch_options = [
+            {
+                'platform': 'Netflix',
+                'type': 'subscription',
+                'url': f'https://www.netflix.com/search?q={movie.title}',
+                'logo': 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg',
+                'price': None
+            },
+            {
+                'platform': 'Amazon Prime',
+                'type': 'subscription',
+                'url': f'https://www.amazon.com/s?k={movie.title}',
+                'logo': 'https://upload.wikimedia.org/wikipedia/commons/1/11/Amazon_Prime_Video_logo.svg',
+                'price': None
+            },
+            {
+                'platform': 'Disney+',
+                'type': 'subscription',
+                'url': f'https://www.disneyplus.com/search?q={movie.title}',
+                'logo': 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg',
+                'price': None
+            },
+            {
+                'platform': 'HBO Max',
+                'type': 'subscription',
+                'url': f'https://play.max.com/search?q={movie.title}',
+                'logo': 'https://upload.wikimedia.org/wikipedia/commons/1/17/HBO_Max_Logo.svg',
+                'price': None
+            },
+            {
+                'platform': 'Apple TV',
+                'type': 'rent/buy',
+                'url': f'https://tv.apple.com/search?term={movie.title}',
+                'logo': 'https://upload.wikimedia.org/wikipedia/commons/2/28/Apple_TV_Plus_Logo.svg',
+                'price': '$3.99+'
+            },
+            {
+                'platform': 'YouTube',
+                'type': 'rent/buy',
+                'url': f'https://www.youtube.com/results?search_query={movie.title}+full+movie',
+                'logo': 'https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg',
+                'price': '$2.99+'
+            }
+        ]
+        
+        return Response({
+            'movie_id': movie.id,
+            'movie_title': movie.title,
+            'watch_options': watch_options,
+            'note': 'Availability may vary by region. Click links to check current availability.'
         })
 
 
